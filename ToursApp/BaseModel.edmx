@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище HospitalModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DailyReception">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CouponNum" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Data" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Diagnos" Type="int" Nullable="false" />
+          <Property Name="Doctor" Type="int" Nullable="false" />
+          <Property Name="Patient" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Diagnos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Doctors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fio" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Specialization" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fio" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Born" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Discount" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MedCardNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_DailyReception_Diagnos">
+          <End Role="Diagnos" Type="Self.Diagnos" Multiplicity="1" />
+          <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diagnos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyReception">
+              <PropertyRef Name="Diagnos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DailyReception_Doctors">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyReception">
+              <PropertyRef Name="Doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DailyReception_Patients">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyReception">
+              <PropertyRef Name="Patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище HospitalModelContainer">
+          <EntitySet Name="DailyReception" EntityType="Self.DailyReception" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Diagnos" EntityType="Self.Diagnos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctors" EntityType="Self.Doctors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DailyReception_Diagnos" Association="Self.FK_DailyReception_Diagnos">
+            <End Role="Diagnos" EntitySet="Diagnos" />
+            <End Role="DailyReception" EntitySet="DailyReception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DailyReception_Doctors" Association="Self.FK_DailyReception_Doctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="DailyReception" EntitySet="DailyReception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DailyReception_Patients" Association="Self.FK_DailyReception_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="DailyReception" EntitySet="DailyReception" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HospitalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DailyReception">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CouponNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Data" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Diagnos" Type="Int32" Nullable="false" />
+          <Property Name="Doctor" Type="Int32" Nullable="false" />
+          <Property Name="Patient" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Diagno" Relationship="Self.FK_DailyReception_Diagnos" FromRole="DailyReception" ToRole="Diagnos" />
+          <NavigationProperty Name="Doctor1" Relationship="Self.FK_DailyReception_Doctors" FromRole="DailyReception" ToRole="Doctors" />
+          <NavigationProperty Name="Patient1" Relationship="Self.FK_DailyReception_Patients" FromRole="DailyReception" ToRole="Patients" />
+        </EntityType>
+        <EntityType Name="Diagno">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="DailyReceptions" Relationship="Self.FK_DailyReception_Diagnos" FromRole="Diagnos" ToRole="DailyReception" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fio" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Specialization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="DailyReceptions" Relationship="Self.FK_DailyReception_Doctors" FromRole="Doctors" ToRole="DailyReception" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fio" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Born" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Discount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MedCardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="DailyReceptions" Relationship="Self.FK_DailyReception_Patients" FromRole="Patients" ToRole="DailyReception" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_DailyReception_Diagnos">
+          <End Role="Diagnos" Type="Self.Diagno" Multiplicity="1" />
+          <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diagnos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyReception">
+              <PropertyRef Name="Diagnos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DailyReception_Doctors">
+          <End Role="Doctors" Type="Self.Doctor" Multiplicity="1" />
+          <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyReception">
+              <PropertyRef Name="Doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DailyReception_Patients">
+          <End Role="Patients" Type="Self.Patient" Multiplicity="1" />
+          <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyReception">
+              <PropertyRef Name="Patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HospitalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DailyReceptions" EntityType="Self.DailyReception" />
+          <EntitySet Name="Diagnos" EntityType="Self.Diagno" />
+          <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_DailyReception_Diagnos" Association="Self.FK_DailyReception_Diagnos">
+            <End Role="Diagnos" EntitySet="Diagnos" />
+            <End Role="DailyReception" EntitySet="DailyReceptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DailyReception_Doctors" Association="Self.FK_DailyReception_Doctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="DailyReception" EntitySet="DailyReceptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DailyReception_Patients" Association="Self.FK_DailyReception_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="DailyReception" EntitySet="DailyReceptions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище HospitalModelContainer" CdmEntityContainer="HospitalEntities">
+          <EntitySetMapping Name="DailyReceptions">
+            <EntityTypeMapping TypeName="HospitalModel.DailyReception">
+              <MappingFragment StoreEntitySet="DailyReception">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CouponNum" ColumnName="CouponNum" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Diagnos" ColumnName="Diagnos" />
+                <ScalarProperty Name="Doctor" ColumnName="Doctor" />
+                <ScalarProperty Name="Patient" ColumnName="Patient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Diagnos">
+            <EntityTypeMapping TypeName="HospitalModel.Diagno">
+              <MappingFragment StoreEntitySet="Diagnos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="HospitalModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctors">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fio" ColumnName="Fio" />
+                <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="HospitalModel.Patient">
+              <MappingFragment StoreEntitySet="Patients">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fio" ColumnName="Fio" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Born" ColumnName="Born" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="MedCardNumber" ColumnName="MedCardNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HospitalModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

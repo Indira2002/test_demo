@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HospitalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DailyReception">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CouponNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Data" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Cost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Diagnos" Type="Int32" Nullable="false" />
+    <Property Name="Doctor" Type="Int32" Nullable="false" />
+    <Property Name="Patient" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Diagno" Relationship="Self.FK_DailyReception_Diagnos" FromRole="DailyReception" ToRole="Diagnos" />
+    <NavigationProperty Name="Doctor1" Relationship="Self.FK_DailyReception_Doctors" FromRole="DailyReception" ToRole="Doctors" />
+    <NavigationProperty Name="Patient1" Relationship="Self.FK_DailyReception_Patients" FromRole="DailyReception" ToRole="Patients" />
+  </EntityType>
+  <EntityType Name="Diagno">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="DailyReceptions" Relationship="Self.FK_DailyReception_Diagnos" FromRole="Diagnos" ToRole="DailyReception" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Fio" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Specialization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="DailyReceptions" Relationship="Self.FK_DailyReception_Doctors" FromRole="Doctors" ToRole="DailyReception" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Fio" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Born" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Discount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MedCardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="DailyReceptions" Relationship="Self.FK_DailyReception_Patients" FromRole="Patients" ToRole="DailyReception" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_DailyReception_Diagnos">
+    <End Role="Diagnos" Type="Self.Diagno" Multiplicity="1" />
+    <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Diagnos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DailyReception">
+        <PropertyRef Name="Diagnos" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DailyReception_Doctors">
+    <End Role="Doctors" Type="Self.Doctor" Multiplicity="1" />
+    <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctors">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DailyReception">
+        <PropertyRef Name="Doctor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DailyReception_Patients">
+    <End Role="Patients" Type="Self.Patient" Multiplicity="1" />
+    <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patients">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DailyReception">
+        <PropertyRef Name="Patient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HospitalEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DailyReceptions" EntityType="Self.DailyReception" />
+    <EntitySet Name="Diagnos" EntityType="Self.Diagno" />
+    <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+    <EntitySet Name="Patients" EntityType="Self.Patient" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_DailyReception_Diagnos" Association="Self.FK_DailyReception_Diagnos">
+      <End Role="Diagnos" EntitySet="Diagnos" />
+      <End Role="DailyReception" EntitySet="DailyReceptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DailyReception_Doctors" Association="Self.FK_DailyReception_Doctors">
+      <End Role="Doctors" EntitySet="Doctors" />
+      <End Role="DailyReception" EntitySet="DailyReceptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DailyReception_Patients" Association="Self.FK_DailyReception_Patients">
+      <End Role="Patients" EntitySet="Patients" />
+      <End Role="DailyReception" EntitySet="DailyReceptions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

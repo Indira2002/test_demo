@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище HospitalModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DailyReception">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CouponNum" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Data" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cost" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Diagnos" Type="int" Nullable="false" />
+    <Property Name="Doctor" Type="int" Nullable="false" />
+    <Property Name="Patient" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Diagnos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Doctors">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fio" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Specialization" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Patients">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fio" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="Born" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Adress" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Discount" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MedCardNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_DailyReception_Diagnos">
+    <End Role="Diagnos" Type="Self.Diagnos" Multiplicity="1" />
+    <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Diagnos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DailyReception">
+        <PropertyRef Name="Diagnos" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DailyReception_Doctors">
+    <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+    <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctors">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DailyReception">
+        <PropertyRef Name="Doctor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DailyReception_Patients">
+    <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+    <End Role="DailyReception" Type="Self.DailyReception" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patients">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DailyReception">
+        <PropertyRef Name="Patient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище HospitalModelContainer">
+    <EntitySet Name="DailyReception" EntityType="Self.DailyReception" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Diagnos" EntityType="Self.Diagnos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Doctors" EntityType="Self.Doctors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DailyReception_Diagnos" Association="Self.FK_DailyReception_Diagnos">
+      <End Role="Diagnos" EntitySet="Diagnos" />
+      <End Role="DailyReception" EntitySet="DailyReception" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DailyReception_Doctors" Association="Self.FK_DailyReception_Doctors">
+      <End Role="Doctors" EntitySet="Doctors" />
+      <End Role="DailyReception" EntitySet="DailyReception" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DailyReception_Patients" Association="Self.FK_DailyReception_Patients">
+      <End Role="Patients" EntitySet="Patients" />
+      <End Role="DailyReception" EntitySet="DailyReception" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
